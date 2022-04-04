@@ -1,0 +1,56 @@
+<html>
+<head>
+	<link href="style.css" rel="stylesheet" type="text/css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"
+		charset="utf-8"></script>
+
+	<script>
+		var accessToken = "76ca568ad590f3ea93b9088c3bb31f813c5ef4fc";
+		var deviceID = "3f0023000147393033373334"
+		var url = "https://api.particle.io/v1/devices/" + deviceID + "/led";
+		function switchOn() {
+			$.post(url, { params: "on", access_token: accessToken }, function(data){
+				if (data.return_value == 1) {
+					cambiarOn();
+				console.log("Hola");	
+				}
+			},"json");
+		}
+		function switchOff() {
+			$.post(url, { params: "off", access_token: accessToken },function(data){
+				if (data.return_value == 0){
+					cambiarOff();
+					console.log("Adios");
+				}
+			},"json");
+		}
+		function callback(data) {
+			valor = JSON.parse(data.result);
+			console.log(valor);
+		}
+	</script>
+
+<script>
+    function cambiarOn() {
+        document.getElementById('bodyImg').style.backgroundImage='url(encendido.jpg)';
+    }
+    function cambiarOff() {
+        document.getElementById('bodyImg').style.backgroundImage='url(apagado.png)';
+    }
+</script>
+</head>
+
+<body style="background-color: cadetblue; display: grid;" id="bodyImg">
+	<h1>
+		On/Off Control
+	</h1>
+	<div class="container-fluid h-100">
+		<div class="row w-100">
+			<div class="v-center">
+				<input type="button" onClick="switchOn()" value="Encender" class="boton" />
+				<input type="button" onClick="switchOff()" value="Apagar" class="boton" />
+			</div>
+		</div>
+	</div>
+</body>
+</html>
